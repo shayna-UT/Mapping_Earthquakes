@@ -24,3 +24,8 @@ let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v10/tile
 
 // Then we add our 'graymap' tile layer to the map.
 streets.addTo(map);
+
+// Review Documentation:
+// https://leafletjs.com/reference-1.6.0.html#marker
+// https://leafletjs.com/reference-1.6.0.html#circle
+// https://leafletjs.com/reference-1.6.0.html#circlemarker
