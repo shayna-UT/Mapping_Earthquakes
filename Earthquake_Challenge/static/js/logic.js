@@ -24,10 +24,14 @@ let baseMaps = {
 // Create the earthquake layer for our map.
 let earthquakeLayer = new L.layerGroup();
 
+// Create the tectonic plates layer
+let tectonicsLayer = new L.layerGroup();
+
 // We define an object that contains the overlays.
 // This overlay will be visible all the time.
 let overlays = {
-    Earthquakes: earthquakeLayer
+    "Earthquakes": earthquakeLayer,
+    "Tectonic Plates": tectonicsLayer
 };
 
 // Create the map object with center, zoom level and default layer.
@@ -163,5 +167,8 @@ d3.json(tectonicPlates).then(function(data) {
     L.geoJson(data, {
         color: "#EC7063",
         weight: 2
-    }).addTo(map);
+    }).addTo(tectonicsLayer);
+
+  // Then we add the earthquake layer to our map.
+  tectonicsLayer.addTo(map);
 });
