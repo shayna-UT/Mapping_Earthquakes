@@ -1,12 +1,20 @@
-// Documentation:
-// https://leafletjs.com/examples/quick-start/
-// https://docs.mapbox.com/api/maps/#static-tiles
-
 // Add console.log to check to see if our code is working.
 console.log("working");
 
-// Create the map object with a center and zoom level.
-let map = L.map('mapid').setView([40.7, -94.5], 4);
+// Create the map object with a center and zoom level:
+// change the coordinates for the center of the map to somewhere between LAX and SFO
+let map = L.map('mapid').setView([36.1733, -120.1794], 7);
+
+// Coordinates for each point to be used in the line.
+let line = [
+    [33.9416, -118.4085], // Los Angeles Intl Airport (LAX)
+    [37.6213, -122.3790]  // San Francisco Intl Airport (SFO)
+];
+
+// Create a polyline using the line coordinates and make the line red.
+L.polyline(line, {
+    color: "red"
+}).addTo(map);
 
 // We create the tile layer that will be the background of our map.
 let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', {
