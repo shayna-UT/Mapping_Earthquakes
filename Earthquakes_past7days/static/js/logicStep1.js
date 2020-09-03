@@ -1,6 +1,3 @@
-// Documentation:
-// https://leafletjs.com/reference-1.6.0.html#path-color
-
 // Add console.log to check to see if our code is working.
 console.log("working");
 
@@ -21,38 +18,27 @@ attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap
 // Create a base layer that holds both maps.
 let baseMaps = {
     "Streets": streets,
-    "Satellite Streets": satelliteStreets
-};
+    "Satellite": satelliteStreets
+};  
 
 // Create the map object with center, zoom level and default layer.
 let map = L.map('mapid', {
-	center: [43.7, -79.3], // Toronto's coordinates
-	zoom: 11,
+	center: [39.5, -98.5], // geographic center of the United States
+	zoom: 3,
 	layers: [streets]
 });
 
 // Pass our map layers into our layers control and add the layers control to the map.
 L.control.layers(baseMaps).addTo(map);
 
-// Accessing the Toronto neighborhoods GeoJSON URL.
-let torontoHoods = "https://raw.githubusercontent.com/shayna-UT/Mapping_Earthquakes/Mapping_GeoJSON_Polygons/Mapping_GeoJSON_Polygons/torontoNeighborhoods.json";
-
-// Create a style for the lines.
-let myStyle = {
-	color: "blue",
-    weight: 1,
-    fillColor: "yellow"
-};
+// Accessing the data for earthquaked in the past 7 days
+// Resources: https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
+// Resources: https://earthquake.usgs.gov/data/comcat/data-eventterms.php
+let earthquakes = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
 // Grabbing our GeoJSON data.
-d3.json(torontoHoods).then(function(data) {
+d3.json(earthquakes).then(function(data) {
     console.log(data);
     // Creating a GeoJSON layer with the retrieved data.
-    L.geoJson(data, {
-        style: myStyle,
-        onEachFeature: function(feature, layer) {
-            console.log(layer);
-            layer.bindPopup("<h2> Neightborhood: " + feature.properties.AREA_NAME);
-        }
-    }).addTo(map);
+    L.geoJson(data).addTo(map);
 });
