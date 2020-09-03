@@ -1,11 +1,8 @@
-// Documentation:
-// https://leafletjs.com/examples/layers-control/
-
 // Add console.log to check to see if our code is working.
 console.log("working");
 
 // We create the tile layer that will be the background of our map.
-let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+let light = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
     accessToken: API_KEY
@@ -20,32 +17,26 @@ attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap
 
 // Create a base layer that holds both maps.
 let baseMaps = {
-    Street: streets,
-    Dark: dark
+    "Day Navigation": light,
+    "Night Navigation": dark
 };
 
 // Create the map object with center, zoom level and default layer.
 let map = L.map('mapid', {
-	center: [30, 30],
+	center: [44.0, -80.0], // Toronto's coordinates
 	zoom: 2,
-	layers: [streets]
+	layers: [light]
 });
 
 // Pass our map layers into our layers control and add the layers control to the map.
 L.control.layers(baseMaps).addTo(map);
 
-// Accessing the airport GeoJSON URL (add after tileLayer() Method)
-// Having the tileLayer() method BEFORE ensures the map gets loaded before the data is added 
-let airportData = "https://raw.githubusercontent.com/shayna-UT/Mapping_Earthquakes/Mapping_GeoJSON_Points/Mapping_GeoJSON_Points/majorAirports.json";
+// Accessing the Toronto airline routes GeoJSON URL.
+let torontoData = "https://raw.githubusercontent.com/shayna-UT/Mapping_Earthquakes/Mapping_GeoJSON_Linestrings/Mapping_GeoJSON_Linestrings/torontoRoutes.json";
 
 // Grabbing our GeoJSON data.
-d3.json(airportData).then(function(data) {
+d3.json(torontoData).then(function(data) {
     console.log(data);
   // Creating a GeoJSON layer with the retrieved data.
-  L.geoJson(data, {
-    onEachFeature: function(feature, layer) {
-        console.log(layer);
-        layer.bindPopup("<h2> Airport Code: " + feature.properties.faa + "</h2> <hr> <h3>Airport Name: " + feature.properties.name + "<h3>");
-    }
-}).addTo(map);
+  L.geoJson(data).addTo(map);
 });
