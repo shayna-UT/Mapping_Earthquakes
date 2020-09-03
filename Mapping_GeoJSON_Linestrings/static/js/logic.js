@@ -34,9 +34,21 @@ L.control.layers(baseMaps).addTo(map);
 // Accessing the Toronto airline routes GeoJSON URL.
 let torontoData = "https://raw.githubusercontent.com/shayna-UT/Mapping_Earthquakes/Mapping_GeoJSON_Linestrings/Mapping_GeoJSON_Linestrings/torontoRoutes.json";
 
+// Create a style for the lines.
+let myStyle = {
+	color: "#ffffa1",
+	weight: 2
+};
+
 // Grabbing our GeoJSON data.
 d3.json(torontoData).then(function(data) {
     console.log(data);
-  // Creating a GeoJSON layer with the retrieved data.
-  L.geoJson(data).addTo(map);
+    // Creating a GeoJSON layer with the retrieved data.
+    L.geoJson(data, {
+        style: myStyle,
+        onEachFeature: function(feature, layer) {
+            console.log(layer);
+            layer.bindPopup("<h2> Airline Code: " + feature.properties.airline + "</h2> <hr> <h3>Destination: " + feature.properties.dst + "<h3>");
+        }
+    }).addTo(map);
 });
