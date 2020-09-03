@@ -151,3 +151,17 @@ d3.json(earthquakes).then(function(data) {
     // Finally, we add our legend to the map. 
     legend.addTo(map);
 });
+
+// Accessing the data for tectonic plates
+let tectonicPlates = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json";
+
+// Grabbing our GeoJSON data.
+d3.json(tectonicPlates).then(function(data) {
+    console.log(data);
+    
+    // Creating a GeoJSON layer with the retrieved data.
+    L.geoJson(data, {
+        color: "#EC7063",
+        weight: 2
+    }).addTo(map);
+});
