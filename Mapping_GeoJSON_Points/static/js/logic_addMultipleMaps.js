@@ -36,7 +36,7 @@ L.control.layers(baseMaps).addTo(map);
 
 // Accessing the airport GeoJSON URL (add after tileLayer() Method)
 // Having the tileLayer() method BEFORE ensures the map gets loaded before the data is added 
-let airportData = "https://raw.githubusercontent.com/shayna-UT/Mapping_Earthquakes/Mapping_GeoJSON_Points/Mapping_GeoJSON_Points/static/js/majorAirports.json";
+let airportData = "https://raw.githubusercontent.com/shayna-UT/Mapping_Earthquakes/Mapping_GeoJSON_Points/Mapping_GeoJSON_Points/majorAirports.json";
 
 // Grabbing our GeoJSON data.
 d3.json(airportData).then(function(data) {
